@@ -4,10 +4,10 @@ For the concept I thought about a Holi Game  with different monsters.
 
 ...so take a taste and see if you can find all different solution paths of the game. 
 
-Installation
+##Installation
 
-Clone the project
+1.Clone the project
 
-Activate your console
+2.Activate your console
 
-Run python game.py
+3.Run python game.py
