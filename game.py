@@ -11,6 +11,8 @@ def print_pause(message):
     time.sleep(2.5)
 
 # Descrption to the player of what is happening
+
+
 def intro():
     print_pause("You find yourself in a small village during Holi festival "
                 "early in the morning.")
@@ -19,14 +21,17 @@ def intro():
                 "the village without getting colored.")
 
 # Validation of the player's input
+
+
 def valid_input(message, options):
     while True:
         response = input(message).lower()
-        for option in options:
-            if option in response:
-                response = option
-                return response
-        print_pause("Sorry, this isn't on the list")
+        if response == yes:
+            return response
+        elif response == no:
+            return response
+        else:
+            print_pause("Sorry, this isn't on the list")
 
 
 # Different scenarios based on the previous choice in case
@@ -160,6 +165,5 @@ def play_game():
     play_again_list = ["yes", "no"]
     intro()
     game_body(items_trunk, enemies, actions, play_again_list)
-
 
 play_game()
