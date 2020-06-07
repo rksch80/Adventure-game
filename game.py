@@ -26,9 +26,9 @@ def intro():
 def valid_input(message, options):
     while True:
         response = input(message).lower()
-        if response == yes:
+        if response == 'yes':
             return response
-        elif response == no:
+        elif response == 'no':
             return response
         else:
             print_pause("Sorry, this isn't on the list")
