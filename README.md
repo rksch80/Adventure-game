@@ -1,6 +1,6 @@
 # Adventure-game
 intro to programming udacity project
-For the concept I thought about a Holi Game  with different monsters.
+For the concept I thought about a Scarry Game  with different monsters.
 
 ...so take a taste and see if you can find all different solution paths of the game. 
 
