@@ -1,169 +1,254 @@
 import time
-
 import random
-
-import sys
-
-
-# Create a time delay between the strings and print the strings
-def print_pause(message):
-    print(message)
-    time.sleep(2.5)
-
-# Descrption to the player of what is happening
+items = []
 
 
-def intro():
-    print_pause("You find yourself in a small village during Holi festival "
-                "early in the morning.")
-    print_pause("people throw colors outside.")
-    print_pause("Your goal is to safely reach home on the opposite side of "
-                "the village without getting colored.")
-
-# Validation of the player's input
+def print_pause(string, t):
+    """Create a time delay between the strings and print the strings"""
+    print(string)
+    time.sleep(t)
 
 
-def valid_input(message, options):
+def intro(ghost):
+    """print the intro"""
+    print_pause("#### THE GHOST OF DELHI ####\n", 2)
+    print_pause(
+        'Every year the' + " " +
+        ghost.upper() +
+        " " +
+        "returns to the city of delhi.",
+        2)
+    print_pause("The streets of delhi are empty. It is a dark night", 2)
+    print_pause("Everyone is afraid of his return.", 2)
+    print_pause("For bussinesss meeting you arrived " +
+                "today in the center of the city.", 2)
+    print_pause("Can't you find the ghost and break the curse?", 2)
+
+
+def appearing(ghost):
+    """let the ghost appear"""
+    print_pause("You walk on.", 2)
+    print_pause("The" + " " + ghost + " " + "appears!!!", 2)
+
+
+def repeat_game():
+    """repeat the game"""
     while True:
-        response = input(message).lower()
-        if response == 'yes':
-            return response
-        elif response == 'no':
-            return response
+        playagain = input("Play again (yes/no)?\n")
+        if playagain == "yes":
+            items.clear()
+            play_game()
+        elif playagain == "no":
+            break
         else:
-            print_pause("Sorry, this isn't on the list")
+            repeat_game()
 
 
-# Different scenarios based on the previous choice in case
-# the player meets outside people
-def trick_or_treaters(item, play_again_list):
-    if item == "candies":
-        print_pause("Candies made the people very happy.")
-        print_pause("They let you continue your way.")
+def choice1(choice, ghost):
+    """handle the first choice"""
+    if choice == "1":
+        if "flashlight" not in items:
+            print_pause("The Railway station is really foggy", 2)
+            print_pause("You can see absolute nothing", 2)
+            print_pause("You walk on and find a flashlight", 2)
+            light_choice(ghost)
+        else:
+            print_pause(
+                "You already pasted this way\nPlease choose another way!", 2)
+            logic(ghost)
+
+
+def choice2(choice, ghost):
+    """handle the second choice"""
+    if choice == "2":
+        if "mirrors" not in items:
+            print_pause("The church street is totally empty and dark", 2)
+            print_pause(
+                "You only hear the sound of" +
+                "the wind that runs through the hall", 2)
+            mirror_choice(ghost)
+        else:
+            print_pause(
+                "You allready pasted this way\nPlease choose another way!", 2)
+            logic(ghost)
+
+
+def choice3(choice, ghost):
+    """handle the third choice"""
+    if choice == "3":
+        print_pause("You enter the fort.", 2)
+        print_pause("You hear a terrible sound in the great hall", 2)
+        print_pause("It is the" +
+                    " " +
+                    ghost +
+                    " " +
+                    "that faces you!",
+                    2)
+        if "flashlight" in items and "mirrors" in items:
+            if ghost == "zombie dog":
+                print_pause("### SHOWDOWN ####", 2)
+                print_pause("The zombie dog begin to run.", 2)
+                print_pause("It attacks you.", 2)
+                print_pause(
+                    "You combine the 2 items to one weapon\n" +
+                    "so that the mirror reflect the light everywhere.",
+                    2)
+                print_pause("The" + ghost + "get burned by the light.", 2)
+                print_pause("YOU WON THE GAME!", 2)
+                repeat_game()
+            else:
+                appearing(ghost)
+                print_pause("You faint.", 2)
+                repeat_game()
+        else:
+            if ghost == "zombie dog":
+                print_pause(
+                    "You enter the dark delhi" +
+                    "fort and walk to the cold rooms", 2)
+                print_pause("Suddenly the" + " " + ghost +
+                            " " + "appears and attacks you.", 2)
+                print_pause(
+                    "You give everything but the" +
+                    " " +
+                    ghost +
+                    " " +
+                    "is to strong.\nYou faint.",
+                    2)
+                print_pause("Something was missing...", 2)
+                logic(ghost)
+            else:
+                print_pause("The" + " " + ghost + " " + "attacks you!", 2)
+                print_pause("You faint!", 2)
+                repeat_game()
+
+
+def light_choice(ghost):
+    """handle the excplicit decision in choice1"""
+    lightchoice = input("Do you wanna take it up (yes/no)?\n").lower()
+    if lightchoice == "yes":
+        items.append("flashlight")
+        appearing(ghost)
+        if ghost == "vampire":
+            print_pause(
+                "You activate your flashlight and the" +
+                ghost +
+                "disappears.",
+                2)
+            print_pause("YOU WON THE GAME", 2)
+            repeat_game()
+
+        elif ghost == "zombie dog":
+            print_pause(
+                "You can't fight the" + " " + ghost + " yet", 2)
+            print_pause("You need one more item!", 2)
+            logic(ghost)
+        else:
+            print_pause(
+                "The flashlight has no" + " " +
+                "effect on the scary doll!", 2)
+            print_pause("You faint!", 2)
+            repeat_game()
+    elif lightchoice == "no":
+        if ghost == "vampire":
+            print_pause("You return to the starting point.", 2)
+            logic(ghost)
+        else:
+            appearing(ghost)
+            print_pause("You faint.", 2)
+            repeat_game()
     else:
-        if item == "guns":
-            print_pause("Your  guns scared people and "
-                        "made them cry.")
-        elif item == "holy water":
-            print_pause("Holy water on people "
-                        " It only made them cry.")
-        print_pause("The angry people kicked you out of the village.")
-        print_pause("You lost! You didn't manage to reach your home.")
-        play_again(play_again_list)
+        print_pause("Please type your answer again!", 2)
+        light_choice(ghost)
 
 
-# Different scenarios based on the previous choice in case
-# the player meets zombies
-def zombies(item, play_again_list):
-    if item == "guns":
-        print_pause("With your guns you shot directly to zombies' heads.")
-        print_pause("All zombies died! You may continue your way.")
-    elif item == "candies" or item == "holy water":
-        print_pause("This wasn't effektive against zombies!")
-        print_pause("You lost! You've also become a zombie and "
-                    "you won't come back home.")
-        play_again(play_again_list)
+def mirror_choice(ghost):
+    """handle the explicit decision in choice 2"""
+    print_pause("There are to little mirrors at the altar.", 2)
+    mirrorchoice = input("Do you wanna pick them up(yes/no)?\n").lower()
+    if mirrorchoice == "yes":
+        items.append("mirrors")
+        appearing(ghost)
+        if ghost == "vampire":
+            if "flashlight" in items:
+                print_pause("You activate your flashlight!", 2)
+                print_pause("You shine on the mirrors.", 2)
+                print_pause(
+                    "That reflection builds an wall" +
+                    "of light so that the vampire disappears.", 2)
+                print_pause("YOU WON THE GAME!", 2)
+                repeat_game()
+            else:
+                if ghost == "zombie dog":
+                    print_pause(
+                        "Something is missing to fight the" +
+                        " " +
+                        ghost +
+                        " ",
+                        2)
+                    logic(ghost)
+                else:
+                    print_pause("You faint!", 2)
+                    repeat_game()
+        else:
+            print_pause("You can't fight the" + " " + ghost + "yet", 2)
+            print_pause("You need one more item!", 2)
+            logic(ghost)
+
+    elif mirrorchoice == "no":
+        print_pause("There is also oil lamp.", 2)
+        oil_choice(ghost)
+
+    else:
+        print_pause("Please type your answer again!", 2)
+        mirror_choice(ghost)
 
 
-# Different scenarios based on the previous choice in case
-# the player meets vampires
-def vampires(item, play_again_list):
-    if item == "holy water":
-        print_pause("You splashed the vampires with holy water.")
-        print_pause("All vampires died! You may continue your way.")
-    elif item == "candies" or item == "guns":
-        print_pause("This wasn't effektive against vampires!")
-        print_pause("You lost! You've also become a vampire and "
-                    "you won't come back home.")
-        play_again(play_again_list)
+def oil_choice(ghost):
+    """handle the choice after the mirror choice"""
+    oilchoice = input(
+        "Do you wanna pick up the oil lamp (yes/no)?\n").lower()
+    if oilchoice == "yes":
+        if ghost == "scary doll":
+            appearing(ghost)
+            print_pause("You turn your oil lamp on!", 2)
+            print_pause("The" + " " + ghost +
+                        " " + "get's burned and dies", 2)
+            print_pause("YOU WON THE GAME!", 2)
+            repeat_game()
+        else:
+            appearing(ghost)
+            print_pause("You faint!", 2)
+            repeat_game()
+    elif oilchoice == "no":
+        appearing(ghost)
+        print_pause("You faint", 2)
+        repeat_game()
+    else:
+        print_pause("Please type your answer again!", 2)
+        oil_choice(ghost)
 
 
-# The player uses the item in their bag against the enemy
-def action_1(enemy, item, items_trunk, play_again_list, enemies):
-    # Enemies are not repeating during one game
-    enemies.remove(enemy)
-    if enemy == "trick-or-treaters":
-        trick_or_treaters(item, play_again_list)
-    elif enemy == "zombies":
-        zombies(item, play_again_list)
-    elif enemy == "vampires":
-        vampires(item, play_again_list)
-    print_pause("Your bag is empty again.")
-    items_trunk.append(item)
-
-
-# The player exchanges the item in the bag
-def action_2(enemy, item, items_trunk, play_again_list, enemies):
-    print_pause("You are back at the old trunk.")
-    print_pause(f"Which item do you want to exchange {item} for?\n")
-    items_trunk.append(item)
-    print_pause(f" - {items_trunk[0].capitalize()}\n"
-                f" - {items_trunk[1].capitalize()}\n")
-    item = valid_input("Please, enter a name of the item.\n", items_trunk)
-    print_pause(f"You put {item} in your bag and return to the {enemy}.")
-    items_trunk.remove(item)
-    action_1(enemy, item, items_trunk, play_again_list, enemies)
-
-
-# The players finds a trunk and has to pick an item from
-# the ["candies", "guns", "holy water"] list
-def find_trunk(items_trunk):
-    print_pause("Further on your way, you find an old trunk with "
-                "three items in it.")
-    print_pause("However, only one item can suit into your bag.")
-    print_pause("Which item would you like to take?\n")
-    print_pause(f" - {items_trunk[0].capitalize()}\n"
-                f" - {items_trunk[1].capitalize()}\n"
-                f" - {items_trunk[2].capitalize()}\n")
-    item = valid_input("Please, enter a name of the item.\n", items_trunk)
-    print_pause(f"You put {item} in your bag and continue your way.")
-    items_trunk.remove(item)
-    return item
-
-
-# The player is given a choice of two actions after meeting an enemy:
-# to use an item against the enemy
-# or to return to the trunk and pick another item.
-def meet_enemy(item, items_trunk, actions, play_again_list, enemies):
-    # Enemy is chosen in a random order
-    enemy = random.choice(enemies)
-    print_pause(f"Suddenly, you've been approached by a bunch of {enemy}.")
-    print_pause("What's your next step?\n")
-    print_pause(f" 1. Get your {item} out of the bag.\n"
-                " 2. Run back to the old trunk to exchange your item.\n")
-    action = valid_input("Please enter a number 1 or 2.\n", actions)
-    if action == '1':
-        action_1(enemy, item, items_trunk, play_again_list, enemies)
-    elif action == '2':
-        action_2(enemy, item, items_trunk, play_again_list, enemies)
-
-
-# After the game is over, the user can play the game again
-def play_again(play_again_list):
-    print_pause("Would you like to play again?")
-    response = valid_input("Please, enter yes or no.\n", play_again_list)
-    if response == "yes":
-        print_pause("Great! Restarting the game...\n")
-        play_game()
-    elif response == "no":
-        sys.exit()
-
-
-def game_body(items_trunk, enemies, actions, play_again_list):
-    while len(enemies) != 0:
-        item = find_trunk(items_trunk)
-        meet_enemy(item, items_trunk, actions, play_again_list, enemies)
-    print_pause("Congratulatons!")
-    print_pause("You defeated all enemies and safely reached your home!")
-    play_again(play_again_list)
+def logic(ghost):
+    """handle the whole logic of the game"""
+    print_pause("Where do you want to go?\n", 2)
+    choice = input(
+        "Choose on of the following numbers:\n1." +
+        "Railway station\n" +
+        "2. church street\n3. fort\n").lower()
+    if choice not in "1" and choice not in "2" and choice not in "3":
+        print_pause("\nSorry I don't understand!", 0)
+        print_pause("Please repeat the input!\n", 0)
+        logic(ghost)
+    choice1(choice, ghost)
+    choice2(choice, ghost)
+    choice3(choice, ghost)
 
 
 def play_game():
-    items_trunk = ["candies", "guns", "holy water"]
-    enemies = ["people", "zombies", "vampires"]
-    actions = ['1', '2']
-    play_again_list = ["yes", "no"]
-    intro()
-    game_body(items_trunk, enemies, actions, play_again_list)
+    """combine the  functions"""
+    ghost = random.choice(["vampire", "zombie dog", "scary doll"])
+    intro(ghost)
+    logic(ghost)
+
 
 play_game()
