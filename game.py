@@ -1,5 +1,6 @@
 import time
 import random
+import sys
 items = []
 
 
@@ -33,15 +34,14 @@ def appearing(ghost):
 
 def repeat_game():
     """repeat the game"""
-    while True:
-        playagain = input("Play again (yes/no)?\n")
-        if playagain == "yes":
-            items.clear()
-            play_game()
-        elif playagain == "no":
-            break
-        else:
-            repeat_game()
+    playagain = input("Play again (yes/no)?\n")
+    if playagain == "yes":
+        items.clear()
+        play_game()
+    elif playagain == "no":
+        sys.exit()       
+    else:
+        repeat_game()
 
 
 def choice1(choice, ghost):
